@@ -1,17 +1,17 @@
-from flask import Flask, request
+from flask import Flask
+from flask import request
+from flask import make_response
+import json
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
-def get_root():
-    print('GET request:')
-    print(request)
-    return '<h1>Hello from slackasaurus</h1>'
-
-
 @app.route('/', methods=['POST'])
 def post_root():
-    print('POST request:')
-    print(request)
-    return '<h1>Hello from slackasaurus</h1>'
+    body = json.dumps(request.get_json(silent=True, force=True), indent=4)
+
+    print('POST body:')
+    print(body)
+    response = make_response(body)
+    response.headers['Content-Type'] = 'application/json'
+    return response
