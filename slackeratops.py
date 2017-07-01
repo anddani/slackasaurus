@@ -5,8 +5,7 @@ except ImportError:
     import urllib2 as urlrequest
 
 
-class Slackeratops():
-
+class Slackeratops:
     def __init__(self, url):
         self.url = url
 
