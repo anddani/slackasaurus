@@ -10,7 +10,8 @@ class Slackeratops:
         self.url = url
 
     def post(self, data):
-        request = urlrequest.Request(self.url, json.dumps(data))
+        request = urlrequest.Request(self.url,
+                                     json.dumps(data).encode('utf--8'))
         request.add_header('Content-Type',  'application/json')
 
         response = urlrequest.urlopen(request)
