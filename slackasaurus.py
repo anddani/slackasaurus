@@ -89,9 +89,7 @@ def parse_request(request):
         logging.error('Invalid request JSON')
     else:
         slack_messages = list(filter(lambda x:
-                                     'payload' in x and
-                                     'platform' in x and
-                                     x['platform'] == 'slack', messages))
+                                     'payload' in x, messages))
         if slack_messages:
             parsed_request = slack_messages[0]['payload']
 
