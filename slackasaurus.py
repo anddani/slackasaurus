@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import make_response
+from flask import redirect
 from flask import request
 
 from slackeratops import Slackeratops
@@ -19,6 +20,12 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
+@app.route('/auth', methods=['GET'])
+def secure_oauth():
+    redirect_uri = request.args.get('redirect_uri')
+    state = request.args.get('state')
+    print(redirect_uri, state)
+    return redirect('%s?state=%s' % (redirect_uri, state), code=302)
 
 @app.route('/', methods=['POST'])
 def slack_post():
@@ -69,7 +76,7 @@ def parse_request(request):
               "payload": {
                 "icon_emoji": ":crocodile:",
                 "username": "bontosaurus",
-                "text": "I will be 7 h late"
+                "text": ["I will be 7 h late becuase reason", "I will be 7 h late"]
               }
             },
             {
@@ -92,5 +99,8 @@ def parse_request(request):
                                      'payload' in x, messages))
         if slack_messages:
             parsed_request = slack_messages[0]['payload']
+            non_empty = [x for x in parsed_request['text'] if x]
+            parsed_request['text'] = non_empty[0] if non_empty else ""
+
 
     return parsed_request
