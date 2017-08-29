@@ -53,6 +53,12 @@ def slack_post():
             {
               "expectUserResponse": true,
               "expectedInputs": [{
+                "inputPrompt": {
+                  "initialPrompts": [{
+                    "textToSpeech": "Tell us your name"
+                  }],
+                  "noInputPrompts": []
+                },
                 "possibleIntents": [{
                   "intent": "actions.intent.PERMISSION",
                   "inputValueData": {
