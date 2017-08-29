@@ -41,12 +41,28 @@ def slack_post():
     logging.debug(parsed_request)
 
     if parsed_request:
-        # Post message from API.AI to slack
-        slack.post(parsed_request)
+        if parsed_request['username']:
+            # Post message from API.AI to slack
+            slack.post(parsed_request)
+            # For now, we return the parsed request (what is sent to slack)
+            response_body = json.dumps(parsed_request)
+        else:
+            # Return intent asking for user's name
+            response_body = """
+            {
+              "expectUserResponse": true,
+              "expectedInputs": [{
+                "possibleIntents": [{
+                  "intent": "actions.intent.PERMISSION",
+                  "inputValueData": {
+                    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+                    "permissions": [ "NAME" ]
+                  }
+                }]
+              }]
+            }
+            """
 
-    # TODO: Give an appropriate response back to API.AI
-    # For now, we return the parsed request (what is sent to slack)
-    response_body = json.dumps(parsed_request)
 
     logging.debug('Response body:')
     logging.debug(response_body)
