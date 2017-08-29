@@ -25,7 +25,7 @@ def secure_oauth():
     redirect_uri = request.args.get('redirect_uri')
     state = request.args.get('state')
     print(redirect_uri, state)
-    return redirect('%s?state=%s' % (redirect_uri, state), code=302)
+    return redirect('%s#access_token=abc123&token_type=bearer&state=%s' % (redirect_uri, state), code=302)
 
 @app.route('/', methods=['POST'])
 def slack_post():
