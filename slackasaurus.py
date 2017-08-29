@@ -41,12 +41,13 @@ def slack_post():
     logging.debug(parsed_request)
 
     if parsed_request:
-        if parsed_request['username']:
-            # Post message from API.AI to slack
-            slack.post(parsed_request)
-            # For now, we return the parsed request (what is sent to slack)
-            response_body = json.dumps(parsed_request)
-        else:
+        try:
+            if parsed_request['username']:
+                # Post message from API.AI to slack
+                slack.post(parsed_request)
+                # For now, we return the parsed request (what is sent to slack)
+                response_body = json.dumps(parsed_request)
+        except KeyError:
             # Return intent asking for user's name
             response_body = """
             {
