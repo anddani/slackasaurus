@@ -57,7 +57,8 @@ def slack_post():
                   "richInitialPrompt": {
                     "items": [{
                       "simpleResponse": {
-                        "textToSpeech": "Give us your name"
+                        "textToSpeech": "Give us your name",
+                        "displayText": "Give us your name."
                       }
                     }]
                   },
