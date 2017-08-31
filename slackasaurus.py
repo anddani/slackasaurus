@@ -51,6 +51,7 @@ def slack_post():
             # Return intent asking for user's name
             response_body = """
             {
+              "conversationToken": "{\\"state\\":null,\\"data\\":{}}",
               "expectUserResponse": true,
               "expectedInputs": [{
                 "inputPrompt": {
@@ -60,9 +61,9 @@ def slack_post():
                         "textToSpeech": "Give us your name",
                         "displayText": "Give us your name."
                       }
-                    }]
-                  },
-                  "noInputPrompts": []
+                    }],
+                    "suggestions": []
+                  }
                 },
                 "possibleIntents": [{
                   "intent": "actions.intent.PERMISSION",
